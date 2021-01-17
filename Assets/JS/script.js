@@ -55,7 +55,7 @@ function renderSearchHistory(cityName) {
 function renderWeatherData(cityName, cityTemp, cityHumidity, cityWindSpeed, cityWeatherIcon, uvVal) {
     cityNameEl.text(cityName)
     currentDateEl.text(`(${today})`)
-    tempEl.text(`Temperature: ${cityTemp} °F`);
+    tempEl.text(`Temperature: ${cityTemp} °C`);
     humidityEl.text(`Humidity: ${cityHumidity}%`);
     windSpeedEl.text(`Wind Speed: ${cityWindSpeed} MPH`);
     uvIndexEl.text(`UV Index: ${uvVal}`);
@@ -63,7 +63,7 @@ function renderWeatherData(cityName, cityTemp, cityHumidity, cityWindSpeed, city
 }
 
 function getWeather(desiredCity) {
-    let queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${desiredCity}&APPID=${apiKey}&units=imperial`;
+    let queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${desiredCity}&APPID=${apiKey}&units=metric`;
     $.ajax({
         url: queryUrl,
         method: "GET"
@@ -77,7 +77,7 @@ function getWeather(desiredCity) {
             cityUVIndex: weatherData.coord,
             cityWeatherIconName: weatherData.weather[0].icon
         }
-    let queryUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${cityObj.cityUVIndex.lat}&lon=${cityObj.cityUVIndex.lon}&APPID=${apiKey}&units=imperial`
+    let queryUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${cityObj.cityUVIndex.lat}&lon=${cityObj.cityUVIndex.lon}&APPID=${apiKey}&units=metric`
     $.ajax({
         url: queryUrl,
         method: 'GET'
@@ -117,7 +117,7 @@ function getWeather(desiredCity) {
 
     function getFiveDayForecast() {
         cardRow.empty();
-        let queryUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${desiredCity}&APPID=${apiKey}&units=imperial`;
+        let queryUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${desiredCity}&APPID=${apiKey}&units=metric`;
         $.ajax({
             url: queryUrl,
             method: "GET"
@@ -150,7 +150,7 @@ function createForecastCard(date, icon, temp, humidity) {
     cardRow.append(fiveDayCardEl);
     cardDate.text(date);
     cardIcon.attr("src", icon);
-    cardTemp.text(`Temp: ${temp} °F`);
+    cardTemp.text(`Temp: ${temp} °C`);
     cardHumidity.text(`Humidity: ${humidity}%`);
     fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
 }
